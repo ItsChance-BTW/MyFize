@@ -66,45 +66,40 @@ plaidController.getTransactions = (request, response, next) => {
     .getTransactions(ACCESS_TOKEN, '2020-10-01', '2020-12-25')
     .then((data) => {
       //add transactions to the database
-      console.log(data.accounts);
-      const transactions = data.transactions; //array of transactions delivered from the database.
-      const simpTransactions = [];
-      const simpAccounts = [];
-      let accountRef = {};
+      console.log(data);
+      // const transactions = data.transactions; //array of transactions delivered from the database.
+      // const simpTransactions = [];
+      // const simpAccounts = [];
+      // let accountRef = {};
 
-      data.accounts.forEach((account) => {
-        let accountsInfo = {};
-        accountRef[account.account_id] = account.subtype;
-        accountsInfo.account_id = account.account_id;
-        accountsInfo.account_subtype = account.subtype;
-        accountsInfo.account_name = account.official_name;
-        accountsInfo.account_balance = account.balances.current;
+      // data.accounts.forEach((account) => {
+      //   let accountsInfo = {};
+      //   accountRef[account.account_id] = account.subtype;
+      //   accountsInfo.account_id = account.account_id;
+      //   accountsInfo.account_subtype = account.subtype;
+      //   accountsInfo.account_name = account.official_name;
+      //   accountsInfo.account_balance = account.balances.current;
 
-        simpAccounts.push(accountsInfo);
-      });
+      //   simpAccounts.push(accountsInfo);
+      // });
 
-      transactions.forEach((trx) => {
-        //trx is one transaction object.
-        let simpTrx = {
-          account_id: trx.account_id,
-          merchant_name: trx.merchant_name,
-          amount: trx.amount,
-          account_type: accountRef[trx.account_id],
-          date_of_transaction: trx.date,
-          category: trx.category[0],
-          transaction_id: trx.transaction_id,
-        };
+      // transactions.forEach((trx) => {
+      //   //trx is one transaction object.
+      //   let simpTrx = {
+      //     account_id: trx.account_id,
+      //     merchant_name: trx.merchant_name,
+      //     amount: trx.amount,
+      //     account_type: accountRef[trx.account_id],
+      //     date_of_transaction: trx.date,
+      //     category: trx.category[0],
+      //     transaction_id: trx.transaction_id,
+      //   };
 
-        simpTransactions.push(simpTrx);
-      });
-      console.log(simpAccounts);
-      request.body = [simpTransactions, simpAccounts];
-      return next();
-    })
-    .catch((err) => {
-      console.log('error : ' + err);
-      return next(err);
+      //   simpTransactions.push(simpTrx);
     });
+  // console.log(simpAccounts);
+  // request.body = [simpTransactions, simpAccounts];
+  // return next();
 };
 
 module.exports = plaidController;
